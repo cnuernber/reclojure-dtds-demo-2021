@@ -1,0 +1,4 @@
+{:paths ["src"]
+ :deps {com.cnuernber/tmdjs    {:mvn/version "1.000-beta-25"}
+        net.java.dev.jna/jna   {:mvn/version "5.7.0"}
+        techascent/tech.viz    {:mvn/version "6.00-beta-16-2"}}}
