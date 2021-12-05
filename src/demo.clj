@@ -4,13 +4,23 @@
 
   (require '[tech.v3.datatype :as dt])
 
+  ;; Default container is jvm-heap
+
   @(def c (dt/make-container :float32 (range 10)))
 
   ;; Simple array ops
 
+  (require '[tech.v3.datatype.functional :as dfn])
+
   ;; functional namespace
 
-  ;;native support
+  (dfn/+ 2 c)
+
+  ;; native heap
+
+  @(def nc (dt/make-container :native-heap :float32 (range 10)))
+
+  (dfn/+ 2 nc)
 
   ;;quick ffi
 
@@ -29,8 +39,6 @@
   ;; are JDK-17 and Graal Native
   (dt-ffi/library-singleton-set! clib nil)
 
-  @(def nc (dt/make-container :native-heap :float32 (range 10)))
-
   (memset nc 0 (* 4 10))
 
   (require '[tech.v3.dataset :as ds])
@@ -40,6 +48,7 @@
   (require '[tech.v3.datatype.gradient :as dt-grad])
 
   (assoc ds :price-grad (dt-grad/gradient1d (ds "price")))
+  (assoc ds :p2 (dfn/sq (ds "price")))
 
   (def idx-map (ds/group-by-column->indexes ds "symbol"))
 
